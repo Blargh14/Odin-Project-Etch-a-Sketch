@@ -21,7 +21,6 @@ newGridButton.addEventListener("click", () => {
 
 extra1 = false;
 extra2 = false;
-darken = 1.0;
 
 extra1Button.addEventListener("click", () => {
     extra1 = !extra1;
@@ -41,7 +40,24 @@ function changeGridPiece(event) {
 
     if (extra1) {
         if (extra2) {
-            return;
+            if (event.target.style.backgroundColor === "grey") {
+                r = Math.floor(Math.random() * 256);
+                g = Math.floor(Math.random() * 256);
+                b = Math.floor(Math.random() * 256);
+                event.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+            }
+            else {
+                darken = parseFloat(event.target.getAttribute("darken"));
+                if (darken === 0) {
+                    return
+                }
+                rgb = event.target.style.backgroundColor.slice(4, -1).split(", ");
+                r = rgb[0] / darken * (darken - .1);
+                g = rgb[1] / darken * (darken - .1);
+                b = rgb[2] / darken * (darken - .1);
+                event.target.setAttribute("darken", `${darken - .1}`);
+                event.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+            }
         }
         else {
             r = Math.floor(Math.random() * 256);
@@ -59,6 +75,9 @@ function populateGrid(num) {
     grid.textContent = '';
     for (let i = 0; i < num * num; i++) {
         gridPiece = document.createElement("div");
+        if (extra2) {
+            gridPiece.setAttribute("darken", "1.0")
+        }
         gridPiece.style.backgroundColor = "grey";
         gridPiece.style.aspectRatio = "1/1";
         gridPiece.style.height = `calc(${100/num}% - ${(num+3)/num}px)`; // Exact calculations don't really work with whole numbers
