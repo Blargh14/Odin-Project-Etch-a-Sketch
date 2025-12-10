@@ -1,2 +1,3 @@
-# Odin-Project-Etch-a-Sketch
 https://www.theodinproject.com/lessons/foundations-etch-a-sketch
+
+Not pictured was me practicing removing commits from GitHub itself, still not sure how or if you can undo the first commit. Didn't want a full commit dedicated to fixing a typo, learned that was how you probably should do it in a team setting, then created two junky commits merging an identical file with itself and having bad commit names. So I learned how deleting a repository works after rebasing those back to one commit in GitHub.
