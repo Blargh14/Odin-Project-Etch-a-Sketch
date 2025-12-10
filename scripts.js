@@ -23,8 +23,11 @@ extra1 = false;
 extra2 = false;
 
 extra1Button.addEventListener("click", () => {
+    if (extra2) {
+        extra2 = false;
+        extra1 = false;
+    }
     extra1 = !extra1;
-    extra2 = false;
     populateGrid(currentGridSize);
 });
 extra2Button.addEventListener("click", () => {
