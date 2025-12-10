@@ -1,19 +1,37 @@
 grid = document.querySelector("#container");
-button = document.querySelector("#new")
+newGridButton = document.querySelector("#new");
+extra1Button = document.querySelector("#extra1");
+extra2Button = document.querySelector("#extra2");
 
-populateGrid(16);
+currentGridSize = 16;
+
+populateGrid(currentGridSize);
 
 grid.addEventListener("mousemove", changeGridPiece);
 
-button.addEventListener("click", () => {
-    newGridValue = NaN;
+newGridButton.addEventListener("click", () => {
+    currentGridSize = NaN;
 
-    while (newGridValue > 100 || Object.is(NaN, newGridValue)) {
-        newGridValue = parseInt(prompt("Enter a number 1-100, 0 and below for an empty grid"));
+    while (currentGridSize > 100 || Object.is(NaN, currentGridSize)) {
+        currentGridSize = parseInt(prompt("Enter a number 1-100, 0 and below for an empty grid"));
     }
 
-    grid.textContent = '';
-    populateGrid(newGridValue);
+    populateGrid(currentGridSize);
+});
+
+extra1 = false;
+extra2 = false;
+darken = 1.0;
+
+extra1Button.addEventListener("click", () => {
+    extra1 = !extra1;
+    extra2 = false;
+    populateGrid(currentGridSize);
+});
+extra2Button.addEventListener("click", () => {
+    extra2 = !extra2;
+    extra1 = extra2;
+    populateGrid(currentGridSize);
 });
 
 function changeGridPiece(event) {
@@ -21,10 +39,24 @@ function changeGridPiece(event) {
         return;
     }
 
-    event.target.style.backgroundColor = "black";
+    if (extra1) {
+        if (extra2) {
+            return;
+        }
+        else {
+            r = Math.floor(Math.random() * 256);
+            g = Math.floor(Math.random() * 256);
+            b = Math.floor(Math.random() * 256);
+            event.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        }
+    }
+    else {
+        event.target.style.backgroundColor = "black";
+    }
 }
 
 function populateGrid(num) {
+    grid.textContent = '';
     for (let i = 0; i < num * num; i++) {
         gridPiece = document.createElement("div");
         gridPiece.style.backgroundColor = "grey";
